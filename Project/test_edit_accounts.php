@@ -16,13 +16,6 @@ if(isset($_GET["id"])){
 //saving
 if(isset($_POST["save"])){
 	//TODO add proper validation/checks
-	// $name = $_POST["name"];
-	// $state = $_POST["state"];
-	// $br = $_POST["base_rate"];
-	// $min = $_POST["mod_min"];
-	// $max = $_POST["mod_max"];
-	// $nst = date('Y-m-d H:i:s');//calc
-    // $user = get_user_id();
 
     // $accNum = $_POST[accNum];
 	$accType = $_POST["account_type"];

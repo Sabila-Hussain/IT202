@@ -58,6 +58,8 @@ function flash($msg) {
     }
 
 }
+//end flash
+
 
 function getMessages() {
     if (isset($_SESSION['flash'])) {
@@ -77,5 +79,20 @@ function randomNumber($length) {
 
     return $result;
 }
-//end flash
+function getAccountType($n) {
+    switch ($n) {
+        case 0:
+            echo "Checking";
+            break;
+        case 1:
+            echo "Saving";
+            break;
+        case 2:
+            echo "Loan";
+            break;
+        default:
+            echo "Unsupported Account Type: " . safer_echo($n);
+            break;
+    }
+}
 ?>
