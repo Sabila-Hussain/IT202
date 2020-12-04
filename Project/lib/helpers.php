@@ -79,20 +79,17 @@ function randomNumber($length) {
 
     return $result;
 }
-function getAccountType($n) {
-    switch ($n) {
-        case 0:
-            echo "Checking";
-            break;
-        case 1:
-            echo "Saving";
-            break;
-        case 2:
-            echo "Loan";
-            break;
-        default:
-            echo "Unsupported Account Type: " . safer_echo($n);
-            break;
+function getWorldAccountId(){
+    $db = getDB();
+    global $worldId;
+    if (!isset($worldId) || empty($worldId)){
+        $stmt = $db->prepare("SELECT id FROM Accounts where account_number = '000000000000'");
+        $stmt->execute();
+        $r = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($r){
+            $worldId = intval($r["id"]);
+        }
     }
+    return $worldId;
 }
 ?>

@@ -13,9 +13,9 @@ if (!has_role("Admin")) {
 <form method="POST">
 	<label>Account Type</label>
 	<select name="account_type">
-		<option value="0">Checking</option>
-		<option value="1">Saving</option>
-		<option value="2">Loan</option>
+		<option value="Checking">Checking</option>
+		<option value="Saving">Saving</option>
+		<option value="Loan">Loan</option>
 	</select>
 	<label>Balance</label>
 	<input type="number" min="0" name="balance"/>

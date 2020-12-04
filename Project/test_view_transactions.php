@@ -17,8 +17,8 @@ if (isset($_GET["id"])) {
 $result = [];
 if (isset($id)) {
     $db = getDB();
-    $stmt = $db->prepare("SELECT Accounts.id,account_number,account_type,opened_date,last_updated,balance, user_id, Users.username FROM Accounts JOIN Users on Accounts.user_id = Users.id where Accounts.id = :id");
-    $r = $stmt->execute([":id" => $id]);
+    $stmt = $db->prepare("SELECT * FROM Transactions where id =:id");
+    $r = $stmt->execute([":id"=>$id]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$result) {
         $e = $stmt->errorInfo();
@@ -34,12 +34,13 @@ if (isset($id)) {
         <div class="card-body">
             <div>
                 <!-- <p>Account Information</p> -->
-                <div>Account Owner: <?php safer_echo($result["username"]); ?></div>
-                <div>Account Number: <?php safer_echo($result["account_number"]); ?></div>
-                <div>Account Type: <?php safer_echo($result["account_type"]); ?></div>
-                <div>Account Opened: <?php safer_echo($result["opened_date"]); ?></div>
-                <div>Last Transaction: <?php safer_echo($result["last_updated"]); ?></div>
-                <div>Current Balance: <?php safer_echo($result["balance"]); ?></div>
+                <div>Account Number (Src): <?php safer_echo($result["act_src_id"]); ?></div>
+                <div>Account Number (Dest): <?php safer_echo($result["act_dest_id"]); ?></div>
+                <div>Transaction Type: <?php safer_echo($result["action_type"]); ?></div>
+                <div>Transaction Date: <?php safer_echo($result["created"]); ?></div>
+                <div>Amount: <?php safer_echo($result["amount"]); ?></div>
+                <div>Memo: <?php safer_echo($result["memo"]); ?></div>
+                <div>Current Balance: <?php safer_echo($result["expected_total"]); ?></div>
             </div>
         </div>
     </div>

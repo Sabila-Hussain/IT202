@@ -28,7 +28,6 @@ if(isset($_POST["save"])){
 	$db = getDB();
 	if(isset($id)){
 		$stmt = $db->prepare("UPDATE Accounts set account_type=:acctype, balance=:bal, last_updated=:updated where id=:id");
-		//$stmt = $db->prepare("INSERT INTO F20_Eggs (name, state, base_rate, mod_min, mod_max, next_stage_time, user_id) VALUES(:name, :state, :br, :min,:max,:nst,:user)");
 		$r = $stmt->execute([
 			":acctype"=>$accType,
 			":bal"=>$bal,
@@ -63,9 +62,9 @@ if(isset($id)){
 <form method="POST">
 	<label>Account Type</label>
 	<select name="account_type" value="<?php echo $result["account_type"];?>">
-		<option value="0" <?php echo ($result["account_type"] == "0"?'selected="selected"':'');?>>Checking</option>
-        <option value="1" <?php echo ($result["account_type"] == "1"?'selected="selected"':'');?>>Saving</option>
-        <option value="2" <?php echo ($result["account_type"] == "2"?'selected="selected"':'');?>>Loan</option>
+		<option value="Checking" <?php echo ($result["account_type"] == "Checking"?'selected="selected"':'');?>>Checking</option>
+        <option value="Saving" <?php echo ($result["account_type"] == "Saving"?'selected="selected"':'');?>>Saving</option>
+        <option value="Loan" <?php echo ($result["account_type"] == "Loan"?'selected="selected"':'');?>>Loan</option>
 	</select>
 	<label>Balance</label>
 	<input type="number" min="1" name="balance" value="<?php echo $result["balance"];?>" />
