@@ -77,4 +77,4 @@ if(isset($id)){
 	<input type="number" min="0" name="amount" value="<?php echo $dest_result["amount"];?>"/>
 	<input type="submit" name="save" value="Update"/>
 </form>
-<?php require(__DIR__ . "/partials/flash.php") ?>;
+<?php require(__DIR__ . "/partials/flash.php"); ?>

@@ -61,3 +61,4 @@ if (isset($_POST["search"]) && !empty($query)) {
         <p>No results</p>
     <?php endif; ?>
 </div>
+<?php require(__DIR__ . "/partials/flash.php"); ?>

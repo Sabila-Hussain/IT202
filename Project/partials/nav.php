@@ -21,6 +21,8 @@ require_once(__DIR__ . "/../lib/helpers.php");
         <li><a href="profile.php">Profile</a></li>
         <li><a href="logout.php">Logout</a></li>
         <li><a href="dashboard.php">Dashboard</a></li>
+        <li><a href="create_account.php">Open Account</a></li>
+
 
     <?php endif; ?>
 </ul>

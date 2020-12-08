@@ -47,4 +47,4 @@ if (isset($id)) {
 <?php else: ?>
     <p>Error looking up id...</p>
 <?php endif; ?>
-<?php require(__DIR__ . "/partials/flash.php")?>;
+<?php require(__DIR__ . "/partials/flash.php"); ?>

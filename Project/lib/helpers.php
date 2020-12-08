@@ -92,4 +92,68 @@ function getWorldAccountId(){
     }
     return $worldId;
 }
+function do_bank_action($account1, $account2, $amountChange, $type, $memo, $date){
+    $db = getDB();
+    $stmt = $db ->prepare("SELECT SUM(amount) AS Total FROM Transactions WHERE Transactions.act_src_id = :id");
+    $r = $stmt->execute([ ":id" => $account1]);
+    $src =$stmt->fetch(PDO::FETCH_ASSOC);
+    $src_total =$src['Total'];
+
+    $src_total -= $amountChange;
+
+    $stmt = $db ->prepare("SELECT SUM(amount) AS Total FROM Transactions WHERE Transactions.act_src_id = :id");
+    $r = $stmt->execute([ ":id" => $account2]);
+    $dest = $stmt->fetch(PDO::FETCH_ASSOC);
+    $dest_total =$dest['Total'];
+    $dest_total += $amountChange;
+
+	$query = "INSERT INTO `Transactions` (`act_src_id`, `act_dest_id`, `amount`, `action_type`, `memo`, `expected_total`, `created`) 
+	VALUES(:p1a1, :p1a2, :p1change, :type, :memo, :a1total, :date), 
+			(:p2a1, :p2a2, :p2change, :type, :memo, :a2total, :date)";
+	
+	$stmt = $db->prepare($query);
+	$stmt->bindValue(":p1a1", $account1);
+	$stmt->bindValue(":p1a2", $account2);
+	$stmt->bindValue(":p1change", $amountChange*-1);
+    $stmt->bindValue(":type", $type);
+    $stmt->bindValue(":memo", $memo);
+    $stmt->bindValue(":a1total", $src_total);
+    $stmt->bindValue(":date", $date);
+	//flip data for other half of transaction
+	$stmt->bindValue(":p2a1", $account2);
+	$stmt->bindValue(":p2a2", $account1);
+	$stmt->bindValue(":p2change", ($amountChange));
+    $stmt->bindValue(":type", $type);
+    $stmt->bindValue(":memo", $memo);
+    $stmt->bindValue(":a2total", $dest_total);
+    $stmt->bindValue(":date", $date);
+	$r = $stmt->execute();
+	if($r){
+        updateAccount($account1, $src_total, $date);
+        updateAccount($account2, $dest_total, $date);
+    }
+	else{
+		$e = $stmt->errorInfo();
+		flash("Error creating: " . var_export($e, true));
+    }
+    
+    return $r;
+}
+function updateAccount($id, $bal, $date){
+    $db = getDB();
+    $stmt = $db->prepare("UPDATE Accounts set balance=:bal, last_updated=:updated where id=:id");
+    $r = $stmt->execute([
+        ":bal"=>$bal,
+        ":updated"=>$date,
+        ":id"=>$id
+    ]);
+    if($r){
+        return $r;
+    }
+    else{
+        $e = $stmt->errorInfo();
+        flash("Error updating: " . var_export($e, true));
+    }
+    return $r;
+}
 ?>

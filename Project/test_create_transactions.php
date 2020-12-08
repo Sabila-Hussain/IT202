@@ -146,4 +146,4 @@ if(isset($_POST["save"])){
     do_bank_action($src_id, $dest_id, $amount, $type, $memo, $created);
 }
 ?>
-<?php require(__DIR__ . "/partials/flash.php") ?>;
+<?php require(__DIR__ . "/partials/flash.php"); ?>
