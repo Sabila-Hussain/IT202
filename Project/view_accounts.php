@@ -4,7 +4,7 @@
 $id = get_user_id();
 $results = [];
     $db = getDB();
-    $stmt = $db->prepare("SELECT id, account_number, account_type, opened_date, last_updated, balance from Accounts WHERE user_id like :id LIMIT 10");
+    $stmt = $db->prepare("SELECT id, account_number, account_type, opened_date, last_updated, balance from Accounts WHERE user_id like :id LIMIT 5");
     $r = $stmt->execute([":id" => $id]);
     if ($r) {
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -30,6 +30,9 @@ $results = [];
         <div class="col">
             <div>Balance</div>
         </div>
+        <div class="col">
+            <div>Action</div>
+        </div>
     </div>
 
             <?php foreach ($results as $r): ?>
@@ -43,10 +46,10 @@ $results = [];
                     <div class="col">
                         <div><?php safer_echo($r["balance"]); ?></div>
                     </div>
-                    <!-- <div>
-                        <a type="button" href="test_edit_accounts.php?id=<?php safer_echo($r['id']); ?>">Edit</a>
-                        <a type="button" href="test_view_accounts.php?id=<?php safer_echo($r['id']); ?>">View</a>
-                    </div> -->
+                    <div class="col">
+                        <a type="button" href="view_transactions.php?id=<?php safer_echo($r['id']); ?>">Transactions</a>
+                        <!-- <a type="button" href="test_view_accounts.php?id=<?php safer_echo($r['id']); ?>">View</a> -->
+                    </div>
                 </div>
             <?php endforeach; ?>
     <?php else: ?>
