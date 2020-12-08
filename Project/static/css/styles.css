@@ -61,6 +61,28 @@ input[type=submit] {
     cursor: pointer;
 }
 
+.page-title{
+    color: #c66b3d;
+    font-weight: bold;
+
+
+}
+.results{
+    font-size: 20px;
+    margin: 30px 50px 0 50px;
+    color: #26495c;
+
+}
+
+.results .title{
+    font-weight: bold;
+}
+
+.results .col{
+    background-color:  rgb(240, 240, 240);
+    border: solid 1px #c4a35a;
+
+}
 /* input:nth-of-type(1) {
     margin-left: 5px !important;
     margin-right: 5px !important;

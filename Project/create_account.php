@@ -47,8 +47,9 @@ if(isset($_POST["save"])){
                 $src_id = getWorldAccountId();
                 // var_dump($result);
 
-                do_bank_action($src_id, $result['id'], $bal, $accType, "created new account", $opened);
+                do_bank_action($src_id, $result['id'], $bal, "Deposit", "created new account", $opened);
                 flash("Your new account has been created successfully!");
+                header("Location:view_accounts.php");
             }
         }
         else{

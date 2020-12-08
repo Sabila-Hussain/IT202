@@ -94,17 +94,22 @@ function getWorldAccountId(){
 }
 function do_bank_action($account1, $account2, $amountChange, $type, $memo, $date){
     $db = getDB();
-    $stmt = $db ->prepare("SELECT SUM(amount) AS Total FROM Transactions WHERE Transactions.act_src_id = :id");
+    $stmt = $db ->prepare("SELECT balance FROM Accounts WHERE id=:id");
     $r = $stmt->execute([ ":id" => $account1]);
     $src =$stmt->fetch(PDO::FETCH_ASSOC);
-    $src_total =$src['Total'];
+    $src_total =$src['balance'];
+
+    if ($src_total < $amountChange){
+        flash ("You do not have enough money available for this transaction");
+        return;
+    }
 
     $src_total -= $amountChange;
 
-    $stmt = $db ->prepare("SELECT SUM(amount) AS Total FROM Transactions WHERE Transactions.act_src_id = :id");
+    $stmt = $db ->prepare("SELECT balance FROM Accounts WHERE id=:id");
     $r = $stmt->execute([ ":id" => $account2]);
     $dest = $stmt->fetch(PDO::FETCH_ASSOC);
-    $dest_total =$dest['Total'];
+    $dest_total =$dest['balance'];
     $dest_total += $amountChange;
 
 	$query = "INSERT INTO `Transactions` (`act_src_id`, `act_dest_id`, `amount`, `action_type`, `memo`, `expected_total`, `created`) 
