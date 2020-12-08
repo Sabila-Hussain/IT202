@@ -34,7 +34,7 @@ ul[class="nav"]{
 form{
     max-width: 50%;
     margin: 30px 0 0 25%;
-    background-color: #c4a35a;
+    background-color: rgb(240, 240, 240);
     padding: 20px;
 }
 label{
