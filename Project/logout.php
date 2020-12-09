@@ -11,3 +11,4 @@ session_destroy();
 flash("You have been logged out");
 die(header("Location: login.php"));
 ?>
+<?php require(__DIR__ . "/partials/flash.php"); ?>

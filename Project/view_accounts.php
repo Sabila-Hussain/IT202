@@ -1,4 +1,10 @@
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
+<?php if (!is_logged_in()) {
+    flash("You need to login first!");
+    //this will redirect to login and kill the rest of this script (prevent it from executing)
+    die(header("Location: login.php"));
+} 
+?>
 
 <?php
 $id = get_user_id();
@@ -47,8 +53,10 @@ $results = [];
                         <div><?php safer_echo($r["balance"]); ?></div>
                     </div>
                     <div class="col">
-                        <a type="button" href="view_transactions.php?id=<?php safer_echo($r['id']); ?>">Transactions</a>
-                        <!-- <a type="button" href="test_view_accounts.php?id=<?php safer_echo($r['id']); ?>">View</a> -->
+                        <a type="button" class="myButton" href="view_transactions.php?id=<?php safer_echo($r['id']); ?>">Transactions</a>
+                        <a type="button" href="new_transaction.php?type=<?php safer_echo('Deposit'); ?>">Deposit</a>
+                        <a type="button" href="new_transaction.php?type=<?php safer_echo('Withdraw'); ?>">Withdraw</a>
+                        <a type="button" href="new_transaction.php?type=<?php safer_echo('Transfer'); ?>">Transfer</a>
                     </div>
                 </div>
             <?php endforeach; ?>

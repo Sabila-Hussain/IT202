@@ -1,5 +1,11 @@
 <?php require_once(__DIR__ . "/partials/nav.php"); ?>
 <?php
+    if (!is_logged_in()) {
+    flash("You need to login first!");
+    //this will redirect to login and kill the rest of this script (prevent it from executing)
+    die(header("Location: login.php"));
+    }
+    
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
 }
@@ -25,7 +31,7 @@ $acc_results = $stmt->fetchall(PDO::FETCH_ASSOC);
 
 
 
-    $stmt = $db->prepare("SELECT id, act_dest_id, action_type, amount, memo, expected_total from Transactions WHERE act_src_id =:q LIMIT 10");
+    $stmt = $db->prepare("SELECT id, act_dest_id, action_type, amount, memo, expected_total from Transactions WHERE act_src_id =:q ORDER BY created DESC LIMIT 10");
     $r = $stmt->execute([":q" => $id]);
     if ($r) {
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
