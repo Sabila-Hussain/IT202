@@ -1,7 +1,10 @@
 <?php 
 require_once(__DIR__ . "/partials/nav.php");
-require_once(__DIR__ . "/lib/helpers.php");
-?>
+if (!is_logged_in()) {
+    flash("You need to login first!");
+    //this will redirect to login and kill the rest of this script (prevent it from executing)
+    die(header("Location: login.php"));
+}?>
 
 <form method="POST">
 	<label>Account Type</label>
