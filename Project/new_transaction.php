@@ -53,8 +53,7 @@
 <form method="POST">
 
     <label>Source Account</label>
-    <select name="src_acc" >
-        <option value="-1">None</option>
+    <select name="src_acc" required>
         <?php foreach ($acc_results as $account): ?>
             <option value="<?php safer_echo($account["id"]); ?>">
                 <?php safer_echo($account["account_number"]); ?>
@@ -63,8 +62,7 @@
     </select>
     <?php if ($type=="Transfer"):?>
         <label>Destination Account</label>
-        <select name="dest_acc" >
-            <option value="-1">None</option>
+        <select name="dest_acc" required>
             <?php foreach ($acc_results as $account): ?>
                 <option value="<?php safer_echo($account["id"]); ?>">
                     <?php safer_echo($account["account_number"]); ?>
@@ -76,7 +74,7 @@
 	<input name="memo"/>
 
 	<label>Amount</label>
-	<input type="number" min="0" name="amount"/>
+	<input type="number" min="0" name="amount" required/>
 	<input type="submit" name="save" value="Complete Transaction"/>
 </form>
 
@@ -107,8 +105,10 @@ if(isset($_POST["save"])){
         $dest_id = $_POST["dest_acc"];
     }
 
-    do_bank_action($src_id, $dest_id, $amount, $type, $memo, $created);
-    flash("Transaction Successful");
+    $res = do_bank_action($src_id, $dest_id, $amount, $type, $memo, $created);
+    if ($res){
+        flash("Transaction Successful");
+    }
 }
 ?>
 <?php require(__DIR__ . "/partials/flash.php"); ?>

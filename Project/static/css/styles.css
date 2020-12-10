@@ -78,10 +78,12 @@ input[type=submit] {
     font-weight: bold;
 }
 
-.results .col{
+.results .myCol{
     background-color:  rgb(240, 240, 240);
     border: solid 1px #c4a35a;
-
+}
+.myBal{
+    text-align: right;
 }
 
 .navbar-custom { 
@@ -94,7 +96,9 @@ input[type=submit] {
 }
 .myButton{
     background-color:#c66b3d;
-    text-align: center;
+    color: #26495c;
+    padding: 0 5px 0 5px;
+    margin: 5px 0 5px 0;
     /* color:rgb(240, 240, 240); */
 }
 /* input:nth-of-type(1) {
