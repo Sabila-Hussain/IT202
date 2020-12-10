@@ -95,8 +95,7 @@ function do_bank_action($account1, $account2, $amountChange, $type, $memo, $date
 	</select>
 
     <label>Source Account</label>
-    <select name="src_acc" >
-        <option value="-1">None</option>
+    <select name="src_acc" required>
         <?php foreach ($acc_results as $account): ?>
             <option value="<?php safer_echo($account["id"]); ?>">
                 <?php safer_echo($account["account_number"]); ?>
@@ -105,8 +104,7 @@ function do_bank_action($account1, $account2, $amountChange, $type, $memo, $date
     </select>
 
     <label>Destination Account</label>
-    <select name="dest_acc" >
-        <option value="-1">None</option>
+    <select name="dest_acc" required >
         <?php foreach ($acc_results as $account): ?>
             <option value="<?php safer_echo($account["id"]); ?>">
                 <?php safer_echo($account["account_number"]); ?>
@@ -118,7 +116,7 @@ function do_bank_action($account1, $account2, $amountChange, $type, $memo, $date
 	<input name="memo"/>
 
 	<label>Amount</label>
-	<input type="number" min="0" name="amount"/>
+	<input type="number" min="0" name="amount" required/>
 	<input type="submit" name="save" value="Create"/>
 </form>
 

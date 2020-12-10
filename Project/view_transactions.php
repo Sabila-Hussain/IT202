@@ -48,20 +48,20 @@ $acc_results = $stmt->fetchall(PDO::FETCH_ASSOC);
 <div class="results">
     <?php if (count($results) > 0): ?>
 
-    <div class="row title">
-        <div class="col">
+    <div class="row text-center title">
+        <div class="col myCol">
             <div>Account Number (Dest)</div>
         </div>
-        <div class="col">
+        <div class="col myCol">
             <div>Trans Type</div>
         </div>
-        <div class="col">
+        <div class="col myCol">
             <div>Amount</div>
         </div>
-        <div class="col">
+        <div class="col myCol">
             <div>Memo</div>
         </div>
-        <div class="col">
+        <div class="col myCol">
             <div>Balance</div>
         </div>
     </div>
@@ -69,21 +69,21 @@ $acc_results = $stmt->fetchall(PDO::FETCH_ASSOC);
             <?php foreach ($results as $r): 
                     $dest = get_acc_num($r["act_dest_id"]);
                 ?>
-                <div class="row">
+                <div class="row text-center">
 
-                    <div class="col">
+                    <div class="col myCol">
                         <div><?php safer_echo($dest); ?></div>
                     </div>
-                    <div class="col">
+                    <div class="col myCol">
                         <div><?php safer_echo($r["action_type"]); ?></div>
                     </div>
-                    <div class="col">
+                    <div class="col myCol myBal">
                         <div><?php safer_echo($r["amount"]); ?></div>
                     </div>
-                    <div class="col">
+                    <div class="col myCol">
                         <div><?php safer_echo($r["memo"]); ?></div>
                     </div>
-                    <div class="col">
+                    <div class="col myCol myBal">
                         <div><?php safer_echo($r["expected_total"]); ?></div>
                     </div>
                     <!-- <div>

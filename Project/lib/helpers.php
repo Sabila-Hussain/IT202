@@ -101,7 +101,7 @@ function do_bank_action($account1, $account2, $amountChange, $type, $memo, $date
 
     if ($src_total < $amountChange){
         flash ("You do not have enough money available for this transaction");
-        return;
+        return false;
     }
 
     $src_total -= $amountChange;
