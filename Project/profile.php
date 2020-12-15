@@ -10,9 +10,26 @@ if (!is_logged_in()) {
 }
 
 $db = getDB();
+$firstName = "";
+$lastName = "";
+$stmt = $db->prepare("SELECT email, username, firstName, lastName from Users WHERE id = :id LIMIT 1");
+$stmt->execute([":id" => get_user_id()]);
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($result) {
+    $email = $result["email"];
+    $username = $result["username"];
+    $firstName = $result["firstName"];
+    $lastName = $result["lastName"];
+    //let's update our session too
+    $_SESSION["user"]["email"] = $email;
+    $_SESSION["user"]["username"] = $username;
+}
 //save data if we submitted the form
 if (isset($_POST["saved"])) {
     $isValid = true;
+    $newfirstName = $_POST["firstName"];
+    $newlastName = $_POST["lastName"];
+
     //check if our email changed
     $newEmail = get_email();
     if (get_email() != $_POST["email"]) {
@@ -64,8 +81,13 @@ if (isset($_POST["saved"])) {
         }
     }
     if ($isValid) {
-        $stmt = $db->prepare("UPDATE Users set email = :email, username= :username where id = :id");
-        $r = $stmt->execute([":email" => $newEmail, ":username" => $newUsername, ":id" => get_user_id()]);
+        $stmt = $db->prepare("UPDATE Users set email = :email, username= :username, firstName= :firstName, lastName= :lastName where id = :id");
+        $r = $stmt->execute([":email" => $newEmail, 
+                             ":username" => $newUsername,
+                             ":firstName" => $newfirstName, 
+                             ":lastName" => $newlastName, 
+                             ":id" => get_user_id()
+                             ]);
         if ($r) {
             flash("Updated profile");
         }
@@ -92,12 +114,14 @@ if (isset($_POST["saved"])) {
             }
         }
 //fetch/select fresh data in case anything changed
-        $stmt = $db->prepare("SELECT email, username from Users WHERE id = :id LIMIT 1");
+        $stmt = $db->prepare("SELECT email, username, firstName, lastName from Users WHERE id = :id LIMIT 1");
         $stmt->execute([":id" => get_user_id()]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result) {
             $email = $result["email"];
             $username = $result["username"];
+            $firstName = $result["firstName"];
+            $lastName = $result["lastName"];
             //let's update our session too
             $_SESSION["user"]["email"] = $email;
             $_SESSION["user"]["username"] = $username;
@@ -116,6 +140,11 @@ if (isset($_POST["saved"])) {
         <input type="email" name="email" value="<?php safer_echo(get_email()); ?>"/>
         <label for="username">Username</label>
         <input type="text" maxlength="60" name="username" value="<?php safer_echo(get_username()); ?>"/>
+        <label for="firstName">First name</label>
+        <input type="text" maxlength="60" name="firstName" value="<?php safer_echo($firstName); ?>"/>
+        <label for="lastName">Last name</label>
+        <input type="text" maxlength="60" name="lastName" value="<?php safer_echo($lastName); ?>"/>
+
         <!-- DO NOT PRELOAD PASSWORD-->
         <label for="pw">Password</label>
         <input type="password" name="password"/>

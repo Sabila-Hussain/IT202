@@ -30,13 +30,13 @@ $results = [];
         <div class="col-3 myCol">
             <div>Account Number</div>
         </div>
-        <div class="col-3 myCol">
+        <div class="col-2 myCol">
             <div>Account Type</div>
         </div>
         <div class="col-2 myCol">
             <div>Balance</div>
         </div>
-        <div class="col-4 myCol">
+        <div class="col-5 myCol">
             <div>Action</div>
         </div>
     </div>
@@ -46,17 +46,18 @@ $results = [];
                     <div class="col-3 myCol">
                         <div class="mt-1"><?php safer_echo($r["account_number"]); ?></div>
                     </div>
-                    <div class="col-3 myCol">
+                    <div class="col-2 myCol">
                         <div class="mt-1"><?php safer_echo($r["account_type"]); ?></div>
                     </div>
                     <div class="col-2 myCol myBal">
                         <div class="mt-1"><?php safer_echo($r["balance"]); ?></div>
                     </div>
-                    <div class="col-4 myCol">
+                    <div class="col-5 myCol">
                         <a type="button" class="myButton" href="view_transactions.php?id=<?php safer_echo($r['id']); ?>">Transactions</a>
                         <a type="button" class="myButton" href="new_transaction.php?type=<?php safer_echo('Deposit'); ?>">Deposit</a>
                         <a type="button" class="myButton" href="new_transaction.php?type=<?php safer_echo('Withdraw'); ?>">Withdraw</a>
                         <a type="button" class="myButton" href="new_transaction.php?type=<?php safer_echo('Transfer'); ?>">Transfer</a>
+                        <a type="button" class="myButton" href="new_exttransaction.php?type=<?php safer_echo('Ext-Transfer'); ?>">Ext-Transfer</a>
                     </div>
                 </div>
             <?php endforeach; ?>
