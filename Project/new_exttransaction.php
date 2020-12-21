@@ -46,8 +46,6 @@
         flash($e[2]);
         }
         $account2 = $result['id'];
-
-    
         $stmt = $db ->prepare("SELECT balance FROM Accounts WHERE id=:id");
         $r = $stmt->execute([ ":id" => $account2]);
         $dest = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -83,11 +81,9 @@
             $e = $stmt->errorInfo();
             flash("Error creating: " . var_export($e, true));
         }
-        
         return $r;
     }
 ?>
-
 
 <form method="POST">
 
