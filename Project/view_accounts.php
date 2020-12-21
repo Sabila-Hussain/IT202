@@ -10,7 +10,7 @@
 $id = get_user_id();
 $results = [];
     $db = getDB();
-    $stmt = $db->prepare("SELECT id, account_number, account_type, opened_date, last_updated, balance from Accounts WHERE user_id like :id LIMIT 5");
+    $stmt = $db->prepare("SELECT id, account_number, account_type, opened_date, last_updated, balance from Accounts WHERE user_id like :id");
     $r = $stmt->execute([":id" => $id]);
     if ($r) {
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);

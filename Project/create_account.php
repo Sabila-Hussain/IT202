@@ -10,7 +10,7 @@ if (!is_logged_in()) {
 	<label>Account Type</label>
 	<select name="account_type">
 		<option value="Checking">Checking</option>
-		<!-- <option value="Saving">Saving</option> -->
+		<option value="Saving">Saving</option>
 		<!-- <option value="Loan">Loan</option> -->
 	</select>
 	<label>Balance</label>
@@ -27,17 +27,22 @@ if(isset($_POST["save"])){
     }else{
         $accNum = randomNumber(12);
         $accType = $_POST["account_type"];
+        $apy = 0;
+        if ($accType == "Saving"){
+            $apy = 0.03;
+        }
         $opened = date('Y-m-d H:i:s');//calc
         $updated = $opened;
         $user = get_user_id();
         $db = getDB();
-        $stmt = $db->prepare("INSERT INTO Accounts (account_number, account_type, opened_date, last_updated, user_id) VALUES(:accnum, :acctype, :opened, :updated, :user)");
+        $stmt = $db->prepare("INSERT INTO Accounts (account_number, account_type, opened_date, last_updated, user_id, APY) VALUES(:accnum, :acctype, :opened, :updated, :user, :apy)");
         $r = $stmt->execute([
             ":accnum"=>$accNum,
             ":acctype"=>$accType,
             ":opened"=>$opened,
             ":updated"=>$updated,
-            ":user"=>$user
+            ":user"=>$user,
+            ":apy"=>$apy
         ]);
         if($r){
             $stmt = $db->prepare("SELECT id FROM Accounts where account_number =:num");
@@ -50,7 +55,7 @@ if(isset($_POST["save"])){
                 $src_id = getWorldAccountId();
                 // var_dump($result);
 
-                do_bank_action($src_id, $result['id'], $bal, "Deposit", "created new account", $opened);
+                do_bank_action($src_id, $result['id'], $bal, $accType, "created new account", $opened);
                 flash("Your new account has been created successfully!");
                 header("Location:view_accounts.php");
             }
