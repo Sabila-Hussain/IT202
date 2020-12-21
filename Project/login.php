@@ -10,6 +10,9 @@
     <br>
     <input type="submit" name="login" value="Login"/>
 </form>
+<div class="text-center mt-3">
+    <a type="button" href="resetPassword.php">Reset Password</a>
+</div>
 
 <?php
 $username = '';
