@@ -29,6 +29,7 @@ if (isset($_POST["saved"])) {
     $isValid = true;
     $newfirstName = $_POST["firstName"];
     $newlastName = $_POST["lastName"];
+    $accountPrivacy =  $_POST["account_type"];
 
     //check if our email changed
     $newEmail = get_email();
@@ -81,12 +82,13 @@ if (isset($_POST["saved"])) {
         }
     }
     if ($isValid) {
-        $stmt = $db->prepare("UPDATE Users set email = :email, username= :username, firstName= :firstName, lastName= :lastName where id = :id");
+        $stmt = $db->prepare("UPDATE Users set email = :email, username= :username, firstName= :firstName, lastName= :lastName, publicity= :publicity where id = :id");
         $r = $stmt->execute([":email" => $newEmail, 
                              ":username" => $newUsername,
                              ":firstName" => $newfirstName, 
                              ":lastName" => $newlastName, 
-                             ":id" => get_user_id()
+                             ":id" => get_user_id(),
+                             ":publicity"=> $accountPrivacy
                              ]);
         if ($r) {
             flash("Updated profile");
@@ -114,7 +116,7 @@ if (isset($_POST["saved"])) {
             }
         }
 //fetch/select fresh data in case anything changed
-        $stmt = $db->prepare("SELECT email, username, firstName, lastName from Users WHERE id = :id LIMIT 1");
+        $stmt = $db->prepare("SELECT email, username, firstName, lastName, publicity from Users WHERE id = :id LIMIT 1");
         $stmt->execute([":id" => get_user_id()]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result) {
@@ -144,7 +146,11 @@ if (isset($_POST["saved"])) {
         <input type="text" maxlength="60" name="firstName" value="<?php safer_echo($firstName); ?>"/>
         <label for="lastName">Last name</label>
         <input type="text" maxlength="60" name="lastName" value="<?php safer_echo($lastName); ?>"/>
-
+        <label>Would you like your account to be private or public?</label>
+            <select name="account_type">
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+            </select>
         <!-- DO NOT PRELOAD PASSWORD-->
         <label for="pw">Password</label>
         <input type="password" name="password"/>
