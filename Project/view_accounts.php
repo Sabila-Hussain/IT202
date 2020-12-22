@@ -19,10 +19,7 @@ $results = [];
         flash("There was a problem fetching the results");
     }
 ?>
-<!-- <form method="POST">
-    <input name="query" placeholder="Search" value="<?php safer_echo($query); ?>"/>
-    <input type="submit" value="Search" name="search"/>
-</form> -->
+
 <h3 class="text-center page-title"> My Accounts </h3>
 <div class="results">
     <?php if (count($results) > 0): ?>
