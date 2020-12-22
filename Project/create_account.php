@@ -11,13 +11,14 @@ if (!is_logged_in()) {
 	<select name="account_type">
 		<option value="Checking">Checking</option>
 		<option value="Saving">Saving</option>
-		<!-- <option value="Loan">Loan</option> -->
 	</select>
 	<label>Balance</label>
 	<input type="number" min="0" name="balance"/>
 	<input type="submit" name="save" value="Create"/>
 </form>
-
+<div class="text-center mt-3">
+    <a type="button" href="loan.php">Get A Loan</a>
+</div>
 <?php
 if(isset($_POST["save"])){
 	//TODO add proper validation/checks
@@ -53,9 +54,8 @@ if(isset($_POST["save"])){
                 flash($e[2]);
             }else{
                 $src_id = getWorldAccountId();
-                // var_dump($result);
 
-                do_bank_action($src_id, $result['id'], $bal, $accType, "created new account", $opened);
+                do_bank_action($src_id, $result['id'], $bal, "Deposit", "created new account", $opened);
                 flash("Your new account has been created successfully!");
                 header("Location:view_accounts.php");
             }

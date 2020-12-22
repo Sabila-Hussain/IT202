@@ -10,7 +10,6 @@
     <input type="password" id="p2" name="confirm" required/>
     <input type="submit" name="reset" value="Reset"/>
 </form>
-
 <?php
 $username = '';
 if (isset($_POST["reset"])) {
